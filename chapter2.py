@@ -2,7 +2,7 @@
 chainring = 52                    # number of teeth
 cog = 11
 ratio = chainring / float(cog)
-print ratio                        # -> 4.72727272727273
+print ratio                        # -> 4.72727272727
 
 chainring = 30
 cog = 27
@@ -18,7 +18,7 @@ class Gear(object):
         self._cog = cog
 
     def ratio(self):
-        self._chainring / float(self._cog)
+        return self._chainring / float(self._cog)
 
     @property
     def chainring(self):
@@ -42,11 +42,11 @@ class Gear(object):
         self._tire = tire
 
     def ratio(self):
-        self.chainring / float(self.cog)
+        return self.chainring / float(self.cog)
 
     def gear_inches(self):
         # tire goes around rim twice for diameter
-        self.ratio * (self.rim + (self.tire * 2))
+        return self.ratio() * (self.rim + (self.tire * 2))
 
     @property
     def chainring(self):
@@ -88,7 +88,7 @@ class Gear(object):
             self._cog = cog
 
     def ratio(self):
-        self._chainring / float(self._cog)      # <-- road to ruin
+        return self._chainring / float(self._cog)      # <-- road to ruin
 
 ############## Page 25 ##############
 
