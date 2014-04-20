@@ -99,7 +99,7 @@ class Gear(object):
         self._cog = cog
 
     def ratio(self):
-        self.chainring / float(self.cog)        # <-------
+        return self.chainring / float(self.cog)        # <-------
 
     @property
     def chainring(self):                        # <-------
@@ -180,86 +180,103 @@ class RevealingReferences(object):
         return wheel.rim + (wheel.tire * 2)
 
 ############## Page 30 ##############
-  def gear_inches
-      # tire goes around rim twice for diameter
-    ratio * (rim + (tire * 2))
-  end
+    def gear_inches(self):
+        # tire goes around rim twice for diameter
+        return self.ratio() * (self.rim + (self.tire * 2))
 
 ############## Page 30 ##############
-  def gear_inches
-    ratio * diameter
-  end
+    def gear_inches(self):
+        return self.ratio() * self.diameter()
 
-  def diameter
-    rim + (tire * 2)
-  end
+    def diameter(self):
+        return self.rim + (self.tire * 2)
 
 ############## Page 32 ##############
-class Gear
-  attr_reader :chainring, :cog, :wheel
-  def initialize(chainring, cog, rim, tire)
-    @chainring = chainring
-    @cog       = cog
-    @wheel     = Wheel.new(rim, tire)
-  end
 
-  def ratio
-    chainring / cog.to_f
-  end
 
-  def gear_inches
-    ratio * wheel.diameter
-  end
+class Gear(object):
+    def __init__(self, chainring, cog, rim, tire):
+        self._chainring = chainring
+        self._cog = cog
+        self._wheel = self.Wheel(rim, tire)
 
-  Wheel = Struct.new(:rim, :tire) do
-    def diameter
-      rim + (tire * 2)
-    end
-  end
-end
+    @property
+    def chainring(self):
+        return self._chainring
+
+    @property
+    def cog(self):
+        return self._cog
+
+    @property
+    def wheel(self):
+        return self._wheel
+
+    def ratio(self):
+        return self.chainring / float(self.cog)
+
+    def gear_inches(self):
+        return self.ratio() * self.wheel.diameter()
+
+    class Wheel(namedtuple('Wheel', ['rim', 'tire'])):
+        def diameter(self):
+            return self.rim + (self.tire * 2)
 
 ############## Page 33 ##############
-class Gear
-  attr_reader :chainring, :cog, :wheel
-  def initialize(chainring, cog, wheel=nil)
-    @chainring = chainring
-    @cog       = cog
-    @wheel     = wheel
-  end
 
-  def ratio
-    chainring / cog.to_f
-  end
 
-  def gear_inches
-    ratio * wheel.diameter
-  end
-end
+class Gear(object):
+    def __init__(self, chainring, cog, wheel=None):
+        self._chainring = chainring
+        self._cog = cog
+        self._wheel = wheel
 
-class Wheel
-  attr_reader :rim, :tire
+    @property
+    def chainring(self):
+        return self._chainring
 
-  def initialize(rim, tire)
-    @rim       = rim
-    @tire      = tire
-  end
+    @property
+    def cog(self):
+        return self._cog
 
-  def diameter
-    rim + (tire * 2)
-  end
+    @property
+    def wheel(self):
+        return self._wheel
 
-  def circumference
-    diameter * Math::PI
-  end
-end
+    def ratio(self):
+        return self.chainring / float(self.cog)
 
-@wheel = Wheel.new(26, 1.5)
-puts @wheel.circumference
+    def gear_inches(self):
+        return self.ratio() * self.wheel.diameter()
+
+
+class Wheel(object):
+    def __init__(self, rim, tire):
+        self._rim = rim
+        self._tire = tire
+
+    def diameter(self):
+        return self.rim + (self.tire * 2)
+
+    def circumference(self):
+        import math
+        return self.diameter() * math.pi
+
+    @property
+    def rim(self):
+        return self._rim
+
+    @property
+    def tire(self):
+        return self._tire
+
+
+wheel = Wheel(26, 1.5)
+print wheel.circumference()
 # -> 91.106186954104
 
-puts Gear.new(52, 11, @wheel).gear_inches
+print Gear(52, 11, wheel).gear_inches()
 # -> 137.090909090909
 
-puts Gear.new(52, 11).ratio
+print Gear(52, 11).ratio()
 # -> 4.72727272727273
-
