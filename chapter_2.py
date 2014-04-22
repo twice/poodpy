@@ -14,19 +14,19 @@ print ratio                        # -> 1.11111111111111
 
 class Gear(object):
     def __init__(self, chainring, cog):
-        self._chainring = chainring
-        self._cog = cog
+        self.__chainring = chainring
+        self.__cog = cog
 
     def ratio(self):
-        return self._chainring / float(self._cog)
+        return self.__chainring / float(self.__cog)
 
     @property
     def chainring(self):
-        return self._chainring
+        return self.__chainring
 
     @property
     def cog(self):
-        return self._cog
+        return self.__cog
 
 print Gear(52, 11).ratio()        # -> 4.72727272727273
 print Gear(30, 27).ratio()        # -> 1.11111111111111
@@ -36,10 +36,10 @@ print Gear(30, 27).ratio()        # -> 1.11111111111111
 
 class Gear(object):
     def __init__(self, chainring, cog, rim, tire):
-        self._chainring = chainring
-        self._cog = cog
-        self._rim = rim
-        self._tire = tire
+        self.__chainring = chainring
+        self.__cog = cog
+        self.__rim = rim
+        self.__tire = tire
 
     def ratio(self):
         return self.chainring / float(self.cog)
@@ -50,19 +50,19 @@ class Gear(object):
 
     @property
     def chainring(self):
-        return self._chainring
+        return self.__chainring
 
     @property
     def cog(self):
-        return self._cog
+        return self.__cog
 
     @property
     def rim(self):
-        return self._rim
+        return self.__rim
 
     @property
     def tire(self):
-        return self._tire
+        return self.__tire
 
 
 print Gear(52, 11, 26, 1.5).gear_inches()
@@ -84,35 +84,35 @@ print Gear(52, 11).ratio()  # didn't this used to work?
 
 class Gear(object):
     def __init__(self, chainring, cog):
-            self._chainring = chainring
-            self._cog = cog
+            self.__chainring = chainring
+            self.__cog = cog
 
     def ratio(self):
-        return self._chainring / float(self._cog)      # <-- road to ruin
+        return self.__chainring / float(self.__cog)      # <-- road to ruin
 
 ############## Page 25 ##############
 
 
 class Gear(object):
     def __init__(self, chainring, cog):
-        self._chainring = chainring
-        self._cog = cog
+        self.__chainring = chainring
+        self.__cog = cog
 
     def ratio(self):
         return self.chainring / float(self.cog)        # <-------
 
     @property
     def chainring(self):                        # <-------
-        return self._chainring
+        return self.__chainring
 
     @property
     def cog(self):                              # <-------
-        return self._cog()
+        return self.__cog()
 
 ############## Page 25 ##############
-  # default implementation via attr_reader - * Python has no attr_reader
+  # default implementation via attr__reader - * Python has no attr_reader
 #  def cog(self):
-#      return self._cog
+#      return self.__cog
 
 ############## Page 25 ##############
   # a simple reimplementation of cog
@@ -158,13 +158,13 @@ class RevealingReferences(object):
 
     @property
     def wheels(self):
-        return self._wheels
+        return self.__wheels
 
     Wheel = namedtuple('Wheel', ['rim', 'tire'])
 
     @wheels.setter
     def wheels(self, value):
-        self._wheels = [self.Wheel(cell[0], cell[1]) for cell in value]
+        self.__wheels = [self.Wheel(cell[0], cell[1]) for cell in value]
 
 ############## Page 29 ##############
     def diameters(self):
@@ -196,21 +196,21 @@ class RevealingReferences(object):
 
 class Gear(object):
     def __init__(self, chainring, cog, rim, tire):
-        self._chainring = chainring
-        self._cog = cog
-        self._wheel = self.Wheel(rim, tire)
+        self.__chainring = chainring
+        self.__cog = cog
+        self.__wheel = self.Wheel(rim, tire)
 
     @property
     def chainring(self):
-        return self._chainring
+        return self.__chainring
 
     @property
     def cog(self):
-        return self._cog
+        return self.__cog
 
     @property
     def wheel(self):
-        return self._wheel
+        return self.__wheel
 
     def ratio(self):
         return self.chainring / float(self.cog)
@@ -227,21 +227,21 @@ class Gear(object):
 
 class Gear(object):
     def __init__(self, chainring, cog, wheel=None):
-        self._chainring = chainring
-        self._cog = cog
-        self._wheel = wheel
+        self.__chainring = chainring
+        self.__cog = cog
+        self.__wheel = wheel
 
     @property
     def chainring(self):
-        return self._chainring
+        return self.__chainring
 
     @property
     def cog(self):
-        return self._cog
+        return self.__cog
 
     @property
     def wheel(self):
-        return self._wheel
+        return self.__wheel
 
     def ratio(self):
         return self.chainring / float(self.cog)
@@ -252,8 +252,8 @@ class Gear(object):
 
 class Wheel(object):
     def __init__(self, rim, tire):
-        self._rim = rim
-        self._tire = tire
+        self.__rim = rim
+        self.__tire = tire
 
     def diameter(self):
         return self.rim + (self.tire * 2)
@@ -264,11 +264,11 @@ class Wheel(object):
 
     @property
     def rim(self):
-        return self._rim
+        return self.__rim
 
     @property
     def tire(self):
-        return self._tire
+        return self.__tire
 
 
 wheel = Wheel(26, 1.5)
