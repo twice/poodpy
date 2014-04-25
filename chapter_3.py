@@ -21,10 +21,10 @@ class Gear(object):
         self.__tire = tire
 
     def gear_inches(self):
-        return self.ratio() * Wheel.new(self.rim, self.tire).diameter()
+        return self.ratio() * Wheel(self.rim, self.tire).diameter()
 
     def ratio(self):
-        return self.chainring / float(cog)
+        return self.chainring / float(self.cog)
 
     @property
     def chainring(self):
@@ -195,7 +195,7 @@ class Gear(object):
 Gear(chainring=52, cog=11, wheel=Wheel(26, 1.5)).gear_inches()
 
 ############## Page 48 ##############
-  # specifying defaults using get
+  # specifying defaults using `get` (ruby `fetch`)
 
     def __init__(self, wheel, **kwargs):
         self.__chainring = kwargs.get('chainring', 40)
@@ -210,7 +210,7 @@ Gear(chainring=52, cog=11, wheel=Wheel(26, 1.5)).gear_inches()
         self.__wheel = wheel
 
 ############## Page 49 ##############
-  # specifying defaults using fetch
+  # specifying defaults using python `get' instead of ruby `fetch`
     def __init__(**kwargs):
         self.__chainring = kwargs.get('chainring', 40)
         self.__cog = kwargs.get('cog', 18)
@@ -241,7 +241,7 @@ class GearWrapper(object):
     @classmethod
     def gear(**kwargs):
         from someframework import Gear
-        return Gear(kwargs('chainring'), kwargs('cog'), kwargs('wheel'))
+        return Gear(kwargs.get('chainring'), kwargs.get('cog'), kwargs.get('wheel'))
 
 # Now you can create a new Gear using an arguments hash.
 GearWrapper.gear(chainring=52, cog=11, wheel=Wheel(26, 1.5)).gear_inches()
@@ -293,7 +293,7 @@ class GearWrapper(object):
     @classmethod
     def gear(**kwargs):
         from someframework import Gear
-        return Gear(kwargs('chainring'), kwargs('cog'), kwargs('wheel'))
+        return Gear(kwargs.get('chainring'), kwargs.get('cog'), kwargs.get('wheel'))
 
 GearWrapper.gear(chainring=52, cog=11, wheel=Wheel(26, 1.5)).gear_inches()
 
